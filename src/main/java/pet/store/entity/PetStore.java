@@ -36,7 +36,11 @@ public class PetStore {
 	private String zip;
 	private String phone;
 	
-//add relationship variables	
+//add relationship variables
+// Many-to-many relationship with Customer
+// Use CascadeType.PERSIST to save customers,
+// but do not delete them when the pet store is deleted
+
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(
 			name = "pet_store_customer", 
@@ -47,10 +51,15 @@ public class PetStore {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Set<Customer> customers = new HashSet<>();
+
 	
+// One-to-many relationship with Employee
+// Use CascadeType.ALL to cascade all operations to employees	
 	@OneToMany(mappedBy = "petStore", cascade = CascadeType.ALL, orphanRemoval = true)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Set<Employee> employees = new HashSet<>();
-			
+
+	
+	
 }
